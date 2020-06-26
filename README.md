@@ -30,7 +30,7 @@ PRs are welcome! This tool, like many other packet parsing tools, may have some 
 ## Requirements
 
 - python3 
-- Scapy
+- scapy
 - tcpdump
 
 ## Example Usage
