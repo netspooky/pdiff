@@ -5,7 +5,7 @@ from collections import Counter
 import argparse
 
 parser = argparse.ArgumentParser(description='pDiff')
-parser.add_argument('-p', dest='inFile', help='Pcap File to Analyze')
+parser.add_argument('-p', dest='inFile', help='Pcap File to Analyze', required=True)
 parser.add_argument('-f', dest='pFilter', help='BPF Filter to use')
 parser.add_argument('-m', dest='maxComp', help='Number of most common bytes to list per byte (Default: 20)')
 parser.add_argument('-o', dest='bOffs', help='Offset to start at (Default: 0)')
@@ -119,7 +119,12 @@ if __name__ == '__main__':
     for k in range(bOffs,(bRange+bOffs)): # this initializes the list of bytes to log based on the range of bytes we want to look at
         pBytes[str(k)] = {}
 
-    packets = sniff(offline=inFile,filter=pFilter) # Grabs the initial packet object 
-    numPackets, totalPackets = iteratePackets(packets,packetLimit,bOffs) # Passes it to the packet iterator
-    listCommon(pBytes,numPackets,totalPackets) # Lists the most common packets
-    commonLengths(pLens,numLengths) # Prints the common lengths
+    try:
+        packets = sniff(offline=inFile,filter=pFilter) # Grabs the initial packet object 
+    except Scapy_Exception: # bad file or something
+        pass
+    else:
+        numPackets, totalPackets = iteratePackets(packets,packetLimit,bOffs) # Passes it to the packet iterator
+        listCommon(pBytes,numPackets,totalPackets) # Lists the most common packets
+        commonLengths(pLens,numLengths) # Prints the common lengths
+        
