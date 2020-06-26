@@ -23,6 +23,15 @@ Things to note:
 
 - Bytes and offsets are 0 indexed, packets are 1 indexed.
 - Packets are ignored when they don't meet the minimum length for packet payload (default 2)
+- Currently only supports TCP and UDP
+
+PRs are welcome! This tool, like many other packet parsing tools, may have some unexpected bugs. Use at your own risk.
+
+## Requirements
+
+- python3 
+- Scapy
+- tcpdump
 
 ## Example Usage
 
